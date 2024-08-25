@@ -44,9 +44,9 @@
   };
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "";
+    variant = "";
   };
 
   services.xserver.enable = true;
@@ -108,12 +108,13 @@
      pkgs.firefox-devedition
 
      # Discord + Discord Configs
+     pkgs.vesktop
      #pkgs.discord
-     (pkgs.discord.override {
-          # remove any overrides that you don't want
-          withOpenASAR = false;
-          withVencord = true;
-     })
+     #(pkgs.discord.override {
+     #     # remove any overrides that you don't want
+     #     withOpenASAR = false;
+     #     withVencord = true;
+     #})
      pkgs.wget
      pkgs.git
      pkgs.gcc

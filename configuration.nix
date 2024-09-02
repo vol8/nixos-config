@@ -10,6 +10,8 @@
       ./hardware-configuration.nix
     ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -118,6 +120,7 @@
      pkgs.wget
      pkgs.git
      pkgs.gcc
+     pkgs.gnumake
      pkgs.aseprite
      pkgs.nerdfonts
      pkgs.pwvucontrol
@@ -130,7 +133,28 @@
      pkgs.mullvad-vpn
      pkgs.qbittorrent
      pkgs.naps2
+     pkgs.home-manager
+     pkgs.vscode
+     pkgs.gcc-arm-embedded
+     pkgs.mgba
+     pkgs.krita
+     pkgs.libreoffice-qt6-still
+
+     # Wine
+     pkgs.wine
+     pkgs.wine64
+     pkgs.winetricks
+     pkgs.wineWowPackages.full
+     
+     # Pokeemerald build
+     pkgs.pkg-config
+     pkgs.libpng
+     pkgsCross.arm-embedded.stdenv.cc
   ];
+
+  nixpkgs.config.packageOverrides = pkgs: {
+        wine = (pkgs.winePackagesFor "wine64").minimal;
+    };
 
   # Nvidia Driver
   # services.xserver.videoDrivers = ["nvidia"];

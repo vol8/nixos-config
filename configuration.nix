@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -51,14 +52,28 @@
     variant = "";
   };
 
+#  services.xserver.enable = true;
+#  services.xserver.displayManager.gdm.enable = true;
+#  services.xserver.desktopManager.gnome.enable = true; 
+#  services.xserver.windowManager.dwm.enable = true;
+  
   services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true; 
-  services.xserver.windowManager.dwm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  #services.xserver.desktopManager.cinnamon.enable = true;  
+  services.xserver.desktopManager.budgie.enable = true;  
+  #services.xserver.desktopManager.gnome.enable = true; 
+  #services.xserver.windowManager.ragnarwm.enable = true;
 
-  services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
-    src = ./configs/dwm;
+  services.xserver.windowManager.ragnarwm = {
+    enable = true;
+    package = pkgs.ragnarwm.overrideAttrs (oldAttrs: rec {
+      src = ./ragnar;  # Point to your local source folder or a custom derivation
+    });
   };
+
+  #services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
+  #  src = ./configs/dwm;
+  #};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vol = {
@@ -69,7 +84,7 @@
   };
 
   # Enable sound
-  sound.enable = false;
+  # sound.enable = false;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -87,8 +102,6 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget 
      pkgs.dmenu
      pkgs.slstatus
 
@@ -108,15 +121,7 @@
      pkgs.neofetch
      pkgs.neovim
      pkgs.firefox-devedition
-
-     # Discord + Discord Configs
      pkgs.vesktop
-     #pkgs.discord
-     #(pkgs.discord.override {
-     #     # remove any overrides that you don't want
-     #     withOpenASAR = false;
-     #     withVencord = true;
-     #})
      pkgs.wget
      pkgs.git
      pkgs.gcc
@@ -151,6 +156,14 @@
      pkgs.libpng
      pkgsCross.arm-embedded.stdenv.cc
   ];
+
+  home-manager = {
+  	extraSpecialArgs = { inherit inputs; };
+	users = {
+		vol = import ./home.nix;
+	};
+  };
+
 
   nixpkgs.config.packageOverrides = pkgs: {
         wine = (pkgs.winePackagesFor "wine64").minimal;

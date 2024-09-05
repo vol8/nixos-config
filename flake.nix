@@ -1,15 +1,21 @@
 {
-  description = "A very basic flake";
+  description = "Flake for Vol's NixOS configs.";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+
+    home-manager = {
+	url = "github:nix-community/home-manager";
+	inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs }: {
-
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
+  outputs = { nixpkgs, ... } @ inputs: {
+	nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+		specialArgs = { inherit inputs; };
+		modules = [
+			./configuration.nix
+		];
+	};
   };
 }

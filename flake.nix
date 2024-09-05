@@ -8,13 +8,24 @@
 	url = "github:nix-community/home-manager";
 	inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    catppuccin.url = "github:catppuccin/nix";
   };
 
-  outputs = { nixpkgs, ... } @ inputs: {
+  outputs = { nixpkgs, home-manager, catppuccin, ... } @ inputs: {
 	nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 		specialArgs = { inherit inputs; };
 		modules = [
 			./configuration.nix
+			catppuccin.nixosModules.catppuccin
+        		{
+          			home-manager.users.vol = {
+            				imports = [
+              					./home.nix
+              					catppuccin.homeManagerModules.catppuccin
+            				];
+          			};
+        		}
 		];
 	};
   };

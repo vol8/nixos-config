@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { inputs, config, pkgs, ... }:
 
 {
@@ -52,28 +48,10 @@
     variant = "";
   };
 
-#  services.xserver.enable = true;
-#  services.xserver.displayManager.gdm.enable = true;
-#  services.xserver.desktopManager.gnome.enable = true; 
-#  services.xserver.windowManager.dwm.enable = true;
-  
+  # Display Manager and Desktop Manager  
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
-  #services.xserver.desktopManager.cinnamon.enable = true;  
   services.xserver.desktopManager.budgie.enable = true;  
-  #services.xserver.desktopManager.gnome.enable = true; 
-  #services.xserver.windowManager.ragnarwm.enable = true;
-
-  services.xserver.windowManager.ragnarwm = {
-    enable = true;
-    package = pkgs.ragnarwm.overrideAttrs (oldAttrs: rec {
-      src = ./ragnar;  # Point to your local source folder or a custom derivation
-    });
-  };
-
-  #services.xserver.windowManager.dwm.package = pkgs.dwm.overrideAttrs {
-  #  src = ./configs/dwm;
-  #};
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vol = {
@@ -84,7 +62,6 @@
   };
 
   # Enable sound
-  # sound.enable = false;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -93,31 +70,13 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     wireplumber.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
   };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
+  # System Packages
   environment.systemPackages = with pkgs; [
-     pkgs.dmenu
-     pkgs.slstatus
-
-     # ST - Terminal
-     (st.override { conf = builtins.readFile ./configs/st/config.h; })
-     pkgs.st
-     (pkgs.st.overrideAttrs (oldAttrs: rec {
-       buildInputs = oldAttrs.buildInputs ++ [ harfbuzz ];
-       patches = [
-         (fetchpatch {
-         url = "https://st.suckless.org/patches/scrollback/st-scrollback-0.8.5.diff";
-         sha256 = "sha256-ZZAbrWyIaYRtw+nqvXKw8eXRWf0beGNJgoupRKsr2lc=";
-         })
-       ];
-     }))
-
      pkgs.neofetch
      pkgs.neovim
      pkgs.firefox-devedition
@@ -157,17 +116,16 @@
      pkgsCross.arm-embedded.stdenv.cc
   ];
 
+  nixpkgs.config.packageOverrides = pkgs: {
+    wine = (pkgs.winePackagesFor "wine64").minimal;
+  };
+
   home-manager = {
   	extraSpecialArgs = { inherit inputs; };
 	users = {
 		vol = import ./home.nix;
 	};
   };
-
-
-  nixpkgs.config.packageOverrides = pkgs: {
-        wine = (pkgs.winePackagesFor "wine64").minimal;
-    };
 
   # Nvidia Driver
   # services.xserver.videoDrivers = ["nvidia"];

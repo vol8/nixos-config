@@ -1,7 +1,6 @@
-{ configs, pkgs, ... }:
+{ configs, config, pkgs, inputs, ... }:
 
 {
-	
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";
 
@@ -10,7 +9,7 @@
 	fonts.fontconfig.enable = true;
 
 	home.packages = [
-    	  (pkgs.nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
+    	  (pkgs.nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
 	];
 
 	# Catppuccin Themes

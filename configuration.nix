@@ -122,9 +122,9 @@
 
   home-manager = {
   	extraSpecialArgs = { inherit inputs; };
-	users = {
-		vol = import ./home.nix;
-	};
+	  users = {
+		  vol = import ./home.nix;
+	  };
   };
 
   # Nvidia Driver

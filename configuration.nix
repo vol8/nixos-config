@@ -8,7 +8,10 @@
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
+  
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+  
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -50,14 +53,29 @@
 
   # Display Manager and Desktop Manager  
   services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.desktopManager.budgie.enable = true;  
+  services.xserver.displayManager.gdm.enable = true;
+  #services.xserver.desktopManager.budgie.enable = true; 
+
+  # i3
+  services.xserver.windowManager.i3 = {
+  	enable = true;
+	extraPackages = with pkgs; [
+		dmenu
+		i3status
+		i3lock
+		i3blocks
+		alacritty
+		st
+	];
+	# package = pkgs.i3-gaps;
+	#config = builtins.readFile (builtins.toFile "i3-config" "/home/vol/nixos-config/i3/config");
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vol = {
     isNormalUser = true;
     description = "vol";
-    extraGroups = [ "networkmanager" "wheel" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [];
   };
 
@@ -72,37 +90,43 @@
     wireplumber.enable = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # System Packages
   environment.systemPackages = with pkgs; [
-     pkgs.neofetch
-     pkgs.neovim
+     pkgs.home-manager
+     pkgs.nerdfonts
+
+     # GUI
      pkgs.firefox-devedition
      pkgs.vesktop
-     pkgs.wget
-     pkgs.git
+     pkgs.aseprite
+     pkgs.pavucontrol
+     pkgs.naps2
+     pkgs.mgba
+     pkgs.ghidra
+     pkgs.obsidian
+
+     # C - Dev
      pkgs.gcc
      pkgs.gnumake
-     pkgs.aseprite
-     pkgs.nerdfonts
-     pkgs.pwvucontrol
-     pkgs.pavucontrol
-     pkgs.davinci-resolve
+
+     # CLI
+     pkgs.neofetch
+     pkgs.neovim
+     pkgs.git
+     pkgs.yt-dlp
+     pkgs.porsmo
      pkgs.openssh
      pkgs.sshfs
-     pkgs.linuxKernel.packages.linux_5_4.wireguard
-     pkgs.wireguard-tools
-     pkgs.mullvad-vpn
-     pkgs.qbittorrent
-     pkgs.naps2
-     pkgs.home-manager
-     pkgs.vscode
-     pkgs.gcc-arm-embedded
-     pkgs.mgba
-     pkgs.krita
-     pkgs.libreoffice-qt6-still
+     pkgs.dos2unix
+     pkgs.ffmpeg
+     pkgs.busybox
+     pkgs.musikcube
+     pkgs.cava
+
+     # NVIM Language Servers
+     pkgs.lua-language-server
+     pkgs.rust-analyzer
+     pkgs.clang-tools
 
      # Wine
      pkgs.wine
@@ -114,7 +138,12 @@
      pkgs.pkg-config
      pkgs.libpng
      pkgsCross.arm-embedded.stdenv.cc
+     pkgs.gcc-arm-embedded
   ];
+
+  programs.zsh.enable = true;
+  users.defaultUserShell = pkgs.zsh;
+
 
   nixpkgs.config.packageOverrides = pkgs: {
     wine = (pkgs.winePackagesFor "wine64").minimal;
@@ -126,60 +155,8 @@
 		  vol = import ./home.nix;
 	  };
   };
+  home-manager.backupFileExtension = "backup";
 
-
-  # Enable OpenGL
-  hardware.opengl = {
-    enable = true;
-  };
-
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-
-    # Modesetting is required.
-    modesetting.enable = true;
-
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead 
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
-    # Fine-grained power management. Turns off GPU when not in use.
-    # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = false;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of 
-    # supported GPUs is at: 
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus 
-    # Only available from driver 515.43.04+
-    # Currently alpha-quality/buggy, so false is currently the recommended setting.
-    open = false;
-
-    # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
-    nvidiaSettings = true;
-
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
-
-  hardware.nvidia.prime = {
-    sync.enable = true;
-		# Make sure to use the correct Bus ID values for your system!
-		intelBusId = "PCI:0:2:0";
-		nvidiaBusId = "PCI:1:0:0";
-                # amdgpuBusId = "PCI:54:0:0"; For AMD GPU
-	};
-  
-  # Nvidia Driver
-  #services.xserver.videoDrivers = ["nvidia"];
-  #hardware.nvidia.modesetting.enable = true;
-  #hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
-  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;

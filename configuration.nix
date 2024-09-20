@@ -54,28 +54,23 @@
   # Display Manager and Desktop Manager  
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
-  #services.xserver.desktopManager.budgie.enable = true; 
 
   # i3
   services.xserver.windowManager.i3 = {
   	enable = true;
 	extraPackages = with pkgs; [
-		dmenu
-		i3status
+		rofi
 		i3lock
-		i3blocks
 		alacritty
-		st
+		i3blocks
 	];
-	# package = pkgs.i3-gaps;
-	#config = builtins.readFile (builtins.toFile "i3-config" "/home/vol/nixos-config/i3/config");
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.vol = {
     isNormalUser = true;
     description = "vol";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "audio"];
     packages = with pkgs; [];
   };
 
@@ -90,10 +85,11 @@
     wireplumber.enable = true;
   };
 
-  # System Packages
-  environment.systemPackages = with pkgs; [
+# System Packages
+environment.systemPackages = with pkgs; [
      pkgs.home-manager
      pkgs.nerdfonts
+     pkgs.lxappearance
 
      # GUI
      pkgs.firefox-devedition
@@ -104,6 +100,8 @@
      pkgs.mgba
      pkgs.ghidra
      pkgs.obsidian
+     pkgs.obs-studio
+     pkgs.vlc
 
      # C - Dev
      pkgs.gcc
@@ -122,6 +120,8 @@
      pkgs.busybox
      pkgs.musikcube
      pkgs.cava
+     pkgs.cmatrix
+     pkgs.pulsemixer
 
      # NVIM Language Servers
      pkgs.lua-language-server

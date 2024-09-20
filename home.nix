@@ -1,9 +1,5 @@
 { configs, config, pkgs, inputs, lib, ... }:
-
-let
-  mod = "Mod4";
-  i3Config = ./i3/config;
-in {
+{
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";
 
@@ -28,53 +24,39 @@ in {
     	  (pkgs.nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
 	];
   
- 	xsession.windowManager.i3 = {
-		enable = true;
-		# package = pkgs.i3-gaps;
+	home.file.".i3" = {
+        	source = ./dotfiles/i3;
+  		onChange = ''
+        		${pkgs.i3}/bin/i3-msg reload
+      		'';
+    	};
 
-		config = builtins.readFile (builtins.toFile "i3-config" "/home/vol/nixos-config/config");
-		# config = {
-		#	defaultWorkspace = "workspace 1";
-		#	modifier = "Mod4";
-		#	fonts = [ "JetBrainsMono" ];
-		#
-		#	keybindings = lib.mkOptionDefault {
-		#		"${mod}+p" = "exec ${pkgs.dmenu}/bin/dmenu_run";
-		#		"${mod}+w" = "exec firefox-devedition";
-		#		"${mod}+Return" = "exec alacritty";
-		
-				# WORKSPACES
-		#		"${mod}+1" = "workspace 1";
-		#		"${mod}+2" = "workspace \"2: web\"";
-		#		"${mod}+3" = "workspace 3";
-		#		"${mod}+4" = "workspace 4";
-		#		"${mod}+5" = "workspace 5";
-		#		"${mod}+6" = "workspace 6";
-		#		"${mod}+7" = "workspace 7";
-		#		"${mod}+8" = "workspace 8";
-		#		"${mod}+9" = "workspace 9";
-		#		"${mod}+0" = "workspace 10";
-		#	};
-
-		#	gaps = {
-		#		inner = 10;
-		#		outer = 5;
-		#	};
-
-		#	window = {
-		#		titlebar = false;	
-		#	};
-		#};
-	};
+	#xdg.configFile."i3blocks".enable = true;
+	#xdg.configFile."i3blocks".source = ./dotfiles/i3blocks/config;
 
 	services.picom = {
 		enable = true;
 		backend = "glx";
 		fade = true;
-  		#vSync = true;
+		fadeDelta = 4;
+		shadow = true;
+		shadowOffsets = [
+			(-15)
+			(-15)
+		];
+		shadowOpacity = 0.8;
+
 		settings = {
+			blur = { 
+			  method = "dual_kawase";
+			  size = 3;
+			  deviation = 5.0;
+			};
+
 			opacity-rule = [
 				"85:class_g = 'alacritty'"
+				"85:class_g = 'vesktop'"
+				"85:class_g = 'rofi'"
 			];
 		};
 	};
@@ -97,34 +79,10 @@ in {
 
 		oh-my-zsh = {
 			enable = true;
-			theme = "risto";
+			#theme = "risto";
+			theme = "simple";
 		};
 	};
-  
-
-	# Catppuccin Themes
-	catppuccin = {
-		enable = true;
-		flavor = "macchiato";
-		accent = "peach";
-		pointerCursor = {
-			enable = true;
-			flavor = "macchiato";
-			accent = "peach";
-		};
-	};
-
-	gtk.catppuccin.enable = true;
-	gtk.catppuccin.accent = "peach";
-	gtk.catppuccin.flavor = "macchiato";
-	gtk.catppuccin.icon.enable = true;
-	gtk.catppuccin.icon.accent = "peach";
-	gtk.catppuccin.icon.flavor = "macchiato";
-	programs.neovim.catppuccin.enable = true;
-	programs.neovim.catppuccin.flavor = "macchiato";
-  programs.zsh.syntaxHighlighting.catppuccin.enable = true;
-  programs.zsh.syntaxHighlighting.catppuccin.flavor = "macchiato";
-
 
 	home.file = {};
 

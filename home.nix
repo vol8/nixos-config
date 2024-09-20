@@ -84,6 +84,11 @@
 		};
 	};
 
+	programs.alacritty = {
+		enable = true;
+		settings = builtins.fromTOML (builtins.readFile ./dotfiles/alacritty/alacritty.toml);
+	};
+
 	home.file = {};
 
 	home.sessionVariables = {};

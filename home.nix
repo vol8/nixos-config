@@ -1,4 +1,6 @@
+# Rice with slight modifications from here: https://www.reddit.com/r/unixporn/comments/x3krgs/i3_i3blocks_polybar_is_bloat_my_newest_rice/ 
 { configs, config, pkgs, inputs, lib, ... }:
+
 {
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";

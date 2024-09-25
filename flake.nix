@@ -8,24 +8,23 @@
 	url = "github:nix-community/home-manager";
 	inputs.nixpkgs.follows = "nixpkgs";
     };
+	
+    nixvim = {
+        url = "github:nix-community/nixvim";
+        # If using a stable channel you can use `url = "github:nix-community/nixvim/nixos-<version>"`
+        inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    catppuccin.url = "github:catppuccin/nix";
+    stylix.url = "github:danth/stylix";
   };
 
-  outputs = { nixpkgs, home-manager, catppuccin, ... } @ inputs: {
+  outputs = { nixpkgs, ... } @ inputs: {
 	nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 		specialArgs = { inherit inputs; };
 		modules = [
 			./configuration.nix
-			catppuccin.nixosModules.catppuccin
-        		{
-          			home-manager.users.vol = {
-            				imports = [
-              					./home.nix
-              					catppuccin.homeManagerModules.catppuccin
-            				];
-          			};
-        		}
+			inputs.stylix.nixosModules.stylix
+#			inputs.nixvim.homeManagerModules.nixvim
 		];
 	};
   };

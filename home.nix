@@ -2,6 +2,9 @@
 { configs, config, pkgs, inputs, lib, ... }:
 
 {
+	imports = [ 
+		inputs.nixvim.homeManagerModules.nixvim 
+	];
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";
 
@@ -59,6 +62,8 @@
 				"85:class_g = 'alacritty'"
 				"85:class_g = 'vesktop'"
 				"85:class_g = 'rofi'"
+				"85:class_g = 'nvim'"
+				"85:class_g = 'neovim'"
 			];
 		};
 	};
@@ -90,6 +95,64 @@
 		enable = true;
 		settings = builtins.fromTOML (builtins.readFile ./dotfiles/alacritty/alacritty.toml);
 	};
+
+
+	programs.neovim.enable = false;
+	programs.nixvim = {
+		enable = true;
+		options = {
+			tabstop = 2;
+			shiftwidth = 2;
+		  softtabstop = 2;
+			expandtab = true;
+      number = true;
+			relativenumber = false;
+		};
+    highlight = {
+      LineNr.link = "NonText";
+    };
+		plugins = {
+      rustaceanvim = {
+        enable = true;
+        settings.server = {
+          cmd = [
+            "rustup"
+            "run"
+            "nightly"
+            "rust-analyzer"
+          ];
+          default_settings = {
+            rust-analyzer = {
+              check = {
+                command = "clippy";
+              };
+              inlayHints = {
+                lifetimeElisionHints = {
+                  enable = "always";
+                };
+              };
+            };
+          };
+          standalone = false;
+        };
+      };
+			treesitter.enable = true;
+			telescope = {
+				enable = true;
+				keymaps."<leader>f" = "find_files";
+				keymaps."<C-p>" = "git_files";
+			};
+			transparent.enable = true;
+			lightline = {
+				enable = true;
+				settings.colorscheme = "nord";
+			};
+		};
+	};
+
+
+	programs.firefox.enable = true;
+	programs.rofi.enable = true;
 
 	home.file = {};
 

@@ -1,4 +1,4 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, lib, ... }:
 
 {
   imports =
@@ -90,8 +90,10 @@ environment.systemPackages = with pkgs; [
      pkgs.home-manager
      pkgs.nerdfonts
      pkgs.lxappearance
+     pkgs.vimPlugins.nord-nvim
 
      # GUI
+     pkgs.gnome.nautilus
      pkgs.firefox-devedition
      pkgs.vesktop
      pkgs.aseprite
@@ -102,10 +104,20 @@ environment.systemPackages = with pkgs; [
      pkgs.obsidian
      pkgs.obs-studio
      pkgs.vlc
+     pkgs.pinta
+     pkgs.libsForQt5.kdenlive
+     pkgs.thunderbird
+     pkgs.blender
 
      # C - Dev
      pkgs.gcc
      pkgs.gnumake
+
+     # Rust - Dev
+     rust-analyzer
+     rustc
+     cargo
+     rustfmt
 
      # CLI
      pkgs.neofetch
@@ -156,6 +168,30 @@ environment.systemPackages = with pkgs; [
 	  };
   };
   home-manager.backupFileExtension = "backup";
+
+  stylix.enable = true;
+  stylix.targets.gtk.enable = true;
+  stylix.targets.nixvim.enable = true;
+  stylix.targets.nixvim.transparentBackground.main = true;
+  stylix.fonts = {
+	monospace = {
+		package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
+		name = "JetBrainsMono Nerd Font Mono";
+	};
+  };
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+  stylix.image = /home/vol/.background-image;
+  stylix.cursor.package = pkgs.nordzy-cursor-theme;
+  stylix.cursor.name = "Nordzy-cursors";
+  stylix.cursor.size = 28;
+  stylix.fonts.sizes = {
+	applications = 10;
+	terminal = 12;
+  };
+
+  stylix.opacity.terminal = 0.7;
+  stylix.opacity.applications = 0.9;
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

@@ -1,12 +1,12 @@
-[window]
-opacity = 0.70
+#[window]
+#opacity = 0.70
 
 [window.padding]
 x = 5
 y = 5
 
-[font]
-normal = { family = "JetBrainsMonoNerdFont", style = "Regular" }
+#[font]
+#normal = { family = "JetBrainsMonoNerdFont", style = "Regular" }
 
 # Dracula theme for Alacritty
 # https://draculatheme.com/alacritty
@@ -17,22 +17,22 @@ normal = { family = "JetBrainsMonoNerdFont", style = "Regular" }
 # Instructions
 # https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd
 
-[colors.cursor]
-cursor = "#d8dee9"
-text = "#2e3440"
+#[colors.cursor]
+#cursor = "#d8dee9"
+#text = "#2e3440"
 
-[colors.normal]
-black = "#3b4252"
-blue = "#81a1c1"
-cyan = "#88c0d0"
-green = "#a3be8c"
-magenta = "#b48ead"
-red = "#bf616a"
-white = "#e5e9f0"
-yellow = "#ebcb8b"
+#[colors.normal]
+#black = "#3b4252"
+#blue = "#81a1c1"
+#cyan = "#88c0d0"
+#green = "#a3be8c"
+#magenta = "#b48ead"
+#red = "#bf616a"
+#white = "#e5e9f0"
+#yellow = "#ebcb8b"
 
-[colors.primary]
-background = "#2e3440"
-foreground = "#d8dee9"
+#[colors.primary]
+#background = "#2e3440"
+#foreground = "#d8dee9"
 
 

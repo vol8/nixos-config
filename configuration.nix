@@ -4,6 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
+      ./modules/stylix.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 
@@ -90,10 +91,9 @@ environment.systemPackages = with pkgs; [
      pkgs.home-manager
      pkgs.nerdfonts
      pkgs.lxappearance
-     pkgs.vimPlugins.nord-nvim
 
      # GUI
-     pkgs.gnome.nautilus
+     pkgs.nautilus
      pkgs.firefox-devedition
      pkgs.vesktop
      pkgs.aseprite
@@ -157,7 +157,6 @@ environment.systemPackages = with pkgs; [
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 
-
   nixpkgs.config.packageOverrides = pkgs: {
     wine = (pkgs.winePackagesFor "wine64").minimal;
   };
@@ -169,30 +168,6 @@ environment.systemPackages = with pkgs; [
 	  };
   };
   home-manager.backupFileExtension = "backup";
-
-  stylix.enable = true;
-  stylix.targets.gtk.enable = true;
-  stylix.targets.nixvim.enable = true;
-  stylix.targets.nixvim.transparentBackground.main = true;
-  stylix.fonts = {
-	monospace = {
-		package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
-		name = "JetBrainsMono Nerd Font Mono";
-	};
-  };
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
-  stylix.image = /home/vol/.background-image;
-  stylix.cursor.package = pkgs.capitaine-cursors;
-  stylix.cursor.name = "capitaine-cursors";
-  stylix.cursor.size = 28;
-  stylix.fonts.sizes = {
-  	applications = 10;
-	  terminal = 12;
-  };
-
-  stylix.opacity.terminal = 1.0;
-  stylix.opacity.applications = 1.0;
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

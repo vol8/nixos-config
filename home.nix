@@ -3,9 +3,7 @@
 {
 	imports = [ 
 		inputs.nixvim.homeManagerModules.nixvim
-    ./modules/zsh.nix
-    ./modules/nvim.nix 
-    ./modules/picom.nix
+    ./modules/default.nix
 	];
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";
@@ -35,19 +33,20 @@
     source = ./dotfiles/i3;
   	onChange = ''${pkgs.i3}/bin/i3-msg reload'';
   };
-	
-	programs.alacritty = {
-		enable = true;
-		settings = builtins.fromTOML (builtins.readFile ./dotfiles/alacritty/alacritty.toml);
-	};
+
+  programs.alacritty = {
+    enable = true;
+    settings.window.padding = {
+      x = 8;
+      y = 8; 
+    };
+  };
 
 	programs.neovim.enable = false;
 
 	programs.firefox.enable = true;
 	programs.rofi.enable = true;
   programs.obs-studio.enable = true;
-
-	home.file = {};
 
 	home.sessionVariables = {};
 

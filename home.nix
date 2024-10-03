@@ -1,25 +1,27 @@
-# Rice with slight modifications from here: https://www.reddit.com/r/unixporn/comments/x3krgs/i3_i3blocks_polybar_is_bloat_my_newest_rice/ 
 { configs, config, pkgs, inputs, lib, ... }:
 
 {
 	imports = [ 
-		inputs.nixvim.homeManagerModules.nixvim 
+		inputs.nixvim.homeManagerModules.nixvim
+    ./modules/zsh.nix
+    ./modules/nvim.nix 
+    ./modules/picom.nix
 	];
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";
 
-  	xdg.userDirs = {
-	    enable = true;
-	    createDirectories = true;
-	    desktop = null;
-	    download = "${config.home.homeDirectory}/DOWNLOADS";
-	    pictures = "${config.home.homeDirectory}/PICS";
-	    documents = null;
-	    music = null;
-	    videos = null;
-	    publicShare = null;
-	    templates = null;
-	  };
+  xdg.userDirs = {
+	  enable = true;
+	  createDirectories = true;
+	  desktop = null;
+	  download = "${config.home.homeDirectory}/DOWNLOADS";
+	  pictures = "${config.home.homeDirectory}/PICS";
+	  documents = null;
+	  music = null;
+	  videos = null;
+	  publicShare = null;
+	  templates = null;
+	};
 
 	home.stateVersion = "24.05";
 
@@ -30,129 +32,20 @@
 	];
   
 	home.file.".i3" = {
-        	source = ./dotfiles/i3;
-  		onChange = ''
-        		${pkgs.i3}/bin/i3-msg reload
-      		'';
-    	};
-
-	#xdg.configFile."i3blocks".enable = true;
-	#xdg.configFile."i3blocks".source = ./dotfiles/i3blocks/config;
-
-	services.picom = {
-		enable = true;
-		backend = "glx";
-		fade = true;
-		fadeDelta = 4;
-		shadow = true;
-		shadowOffsets = [
-			(-15)
-			(-15)
-		];
-		shadowOpacity = 0.8;
-
-		settings = {
-			blur = { 
-			  method = "dual_kawase";
-			  size = 3;
-			  deviation = 5.0;
-			};
-
-			opacity-rule = [
-				"85:class_g = 'alacritty'"
-				"85:class_g = 'vesktop'"
-				"85:class_g = 'rofi'"
-				"85:class_g = 'nvim'"
-				"85:class_g = 'neovim'"
-			];
-		};
-	};
-
-	programs.zsh = {
-		enable = true;
-	    	enableCompletion = true;
-		autosuggestion.enable = true;
-		syntaxHighlighting.enable = true;
-
- 		shellAliases = {
-      			ll = "ls -l";
-      			update = "sudo nixos-rebuild switch --flake .";
-		};
-	    	
-		history = {
-			size = 10000;
-			path = "${config.xdg.dataHome}/zsh/history";
-		};
-
-		oh-my-zsh = {
-			enable = true;
-			#theme = "risto";
-			theme = "simple";
-		};
-	};
-
+    source = ./dotfiles/i3;
+  	onChange = ''${pkgs.i3}/bin/i3-msg reload'';
+  };
+	
 	programs.alacritty = {
 		enable = true;
 		settings = builtins.fromTOML (builtins.readFile ./dotfiles/alacritty/alacritty.toml);
 	};
 
-
 	programs.neovim.enable = false;
-	programs.nixvim = {
-		enable = true;
-		options = {
-			tabstop = 2;
-			shiftwidth = 2;
-		  softtabstop = 2;
-			expandtab = true;
-      number = true;
-			relativenumber = false;
-		};
-    highlight = {
-      LineNr.link = "NonText";
-    };
-		plugins = {
-      rustaceanvim = {
-        enable = true;
-        settings.server = {
-          cmd = [
-            "rustup"
-            "run"
-            "nightly"
-            "rust-analyzer"
-          ];
-          default_settings = {
-            rust-analyzer = {
-              check = {
-                command = "clippy";
-              };
-              inlayHints = {
-                lifetimeElisionHints = {
-                  enable = "always";
-                };
-              };
-            };
-          };
-          standalone = false;
-        };
-      };
-			treesitter.enable = true;
-			telescope = {
-				enable = true;
-				keymaps."<leader>f" = "find_files";
-				keymaps."<C-p>" = "git_files";
-			};
-			transparent.enable = true;
-			lightline = {
-				enable = true;
-				settings.colorscheme = "nord";
-			};
-		};
-	};
-
 
 	programs.firefox.enable = true;
 	programs.rofi.enable = true;
+  programs.obs-studio.enable = true;
 
 	home.file = {};
 

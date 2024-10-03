@@ -105,9 +105,10 @@ environment.systemPackages = with pkgs; [
      pkgs.obs-studio
      pkgs.vlc
      pkgs.pinta
-     pkgs.libsForQt5.kdenlive
+     pkgs.kdePackages.kdenlive
      pkgs.thunderbird
      pkgs.blender
+     pkgs.flameshot
 
      # C - Dev
      pkgs.gcc
@@ -179,18 +180,18 @@ environment.systemPackages = with pkgs; [
 		name = "JetBrainsMono Nerd Font Mono";
 	};
   };
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/nord.yaml";
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-material-dark-medium.yaml";
   stylix.image = /home/vol/.background-image;
-  stylix.cursor.package = pkgs.nordzy-cursor-theme;
-  stylix.cursor.name = "Nordzy-cursors";
+  stylix.cursor.package = pkgs.capitaine-cursors;
+  stylix.cursor.name = "capitaine-cursors";
   stylix.cursor.size = 28;
   stylix.fonts.sizes = {
-	applications = 10;
-	terminal = 12;
+  	applications = 10;
+	  terminal = 12;
   };
 
-  stylix.opacity.terminal = 0.7;
-  stylix.opacity.applications = 0.9;
+  stylix.opacity.terminal = 1.0;
+  stylix.opacity.applications = 1.0;
 
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -5,7 +5,7 @@ font pango:JetBrainsMonoNerdFont, JetBrainsMonoNerdFont
 set $mod Mod4
 floating_modifier $mod
 
-default_border pixel 2
+default_border pixel 0
 default_floating_border normal 2
 hide_edge_borders none
 focus_wrapping yes
@@ -16,12 +16,22 @@ workspace_auto_back_and_forth no
 
 # Client Config
 # class                 border  backgr. text    indicator
-client.focused          #4c566a #81a1c1 #d8dee9 #81a1c1
-client.unfocused        #4c566a #50667c #2e3440 #50667c
-client.focused_inactive #4c566a #81a1c1 #2e3440 #2e3440
-client.placeholder      #4c566a #2e3440 #4c566a #2e3440
-client.urgent           #4c566a #BF616A #d8dee9 #BF616A
-client.background       #2e3440
+
+# NORD THEME
+#client.focused          #4c566a #81a1c1 #d8dee9 #81a1c1
+#client.unfocused        #4c566a #50667c #2e3440 #50667c
+#client.focused_inactive #4c566a #81a1c1 #2e3440 #2e3440
+#client.placeholder      #4c566a #2e3440 #4c566a #2e3440
+#client.urgent           #4c566a #BF616A #d8dee9 #BF616A
+#client.background       #2e3440
+
+# GRUVBOX THEME
+client.focused          #665c54 #665c54 #eddbb2 #2e9ef4   #665c54
+client.focused_inactive #282828 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #3c3836 #3c3836 #a89984 #292d2e   #222222
+client.urgent           #cc241d #cc241d #ebdbb2 #cc241d   #cc241d
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+client.background       #ffffff
 
 
 # Bar
@@ -37,15 +47,16 @@ bar {
   tray_output primary
   status_command i3blocks -c /home/vol/nixos-config/dotfiles/i3blocks/config
   colors {
-    background #2e3440
-    statusline #d8dee9
-    separator #8FBCBB
+    # GRUVBOX IG
+    background #292828
+   	statusline #ebdbb2
+		separator  #666666
 
-    focused_workspace  #2e3440 #2e3440 #81A1C1
-    active_workspace   #2e3440 #2e3440 #8FBCBB
-    inactive_workspace #2e3440 #2e3440 #4c566a
-    urgent_workspace   #2e3440 #2e3440 #BF616A
-    binding_mode       #2e3440 #2e3440 #BF616A
+    focused_workspace  #292828 #292828 #ebdbb2
+    active_workspace   #292828 #292828 #ebdbb2
+    inactive_workspace #292828 #292828 #999078
+    urgent_workspace   #292828 #292828 #455f59
+    binding_mode       #292828 #292828 #455f59
   }
 }
 
@@ -97,6 +108,7 @@ bindsym $mod+Shift+e exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b '
 bindsym $mod+p 	    exec /run/current-system/sw/bin/rofi -show drun
 bindsym $mod+w      exec firefox-devedition
 bindsym $mod+Return exec alacritty
+bindsym Print exec flameshot gui 
 
 # Layout Setting & Keybinds
 bindsym $mod+h 		 split h

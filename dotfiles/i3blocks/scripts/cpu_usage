@@ -50,9 +50,17 @@ $cpu_usage eq -1 and die 'Can\'t find CPU information';
 
 # Print short_text, full_text
 print "${label}";
-printf "<span size='small' rise='2pt'>%.${decimals}f%%</span>\n", $cpu_usage;
+printf "%.${decimals}f%%\n", $cpu_usage;
 print "${label}";
-printf "<span size='small' rise='2pt'>%.${decimals}f%%</span>\n", $cpu_usage;
+printf "%.${decimals}f%%\n", $cpu_usage;
+
+# Print color, if needed
+if ($cpu_usage >= $t_crit) {
+    print "${color_crit}\n";
+} elsif ($cpu_usage >= $t_warn) {
+    print "${color_warn}\n";
+} else {
+    print "${color_normal}\n";
+}
 
 exit 0;
-

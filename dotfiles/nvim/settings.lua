@@ -1,15 +1,21 @@
 local opt = vim.opt
-local g = g.vim
+local g = vim.g
+
+vim.cmd [[
+    map ; :
+]]
 
 g.mapLeader = ' '
 
--- Indentation
+opt.number = true
+opt.cursorline = true
+opt.incsearch = true
+
 opt.smartindent = true
 opt.autoindent = true
 opt.tabstop = 4
 opt.shiftwidth = 4
 opt.expandtab = true
 
--- Remove viminfo file
 opt.viminfo = ""
-opt.vininfofile = "NONE"
+opt.viminfofile = "NONE"

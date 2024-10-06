@@ -1,50 +1,33 @@
-{
-  programs.nixvim = {
-	  enable = true;
-  	options = {
-		  tabstop = 2;
-	  	shiftwidth = 2;
-  		softtabstop = 2;
-	  	expandtab = true;
-      number = true;
-			relativenumber = false;
-		};
+{ pkgs, ... }:
+{ 
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
 
-    # Makes line numbers the same color as comments
-    highlight = {
-      LineNr.link = "NonText";
-    };
+    # Installs packages without an external plugin manager
+    plugins = with pkgs.vimPlugins; [
+        nvim-cmp
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-path
+        cmp-cmdline
+            
+        {
+            plugin = nvim-lspconfig;
+            config = ''
+                lua << EOF
+                require('lspconfig').rust_analyzer.setup{}
+                EOF
+            '';
+        }
+    ];
 
-	  plugins = {
-      cmp = {
-        autoEnableSources = true;
-        settings.sources = [
-          { name = "nvim_lsp"; }
-          { name = "path"; }
-          { name = "buffer"; }
-          { name = "latex-symbols"; }
-        ];
-      };
-
-      lsp = {
-        enable = true;
-        servers.clangd.enable = true;
-        servers.clangd.autostart = true;
-  
-        servers.rust-analyzer.enable = true;
-        servers.rust-analyzer.autostart = true;
-      };
-      treesitter.enable = true;
-	  	telescope = {
-  			enable = true;
-				keymaps."<leader>f" = "find_files";
-			  keymaps."<C-p>" = "git_files";
-		  };
-	  	lightline = {
-  			enable = true;
-				settings.colorscheme = "jellybeans"; # No gruvbox theme???
-        settings.component_function = { readonly = "LightlineReadonly"; };
-		  };
-	  };
+    # - init.lua
+    # luafile $HOME/nixos-config/dotfiles/nvim/abcvol.lua     
+    extraLuaConfig = ''
+        dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/settings.lua'))
+        dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/lsp.lua'))
+    '';
   };
 }
+

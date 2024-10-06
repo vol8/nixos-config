@@ -2,8 +2,6 @@
 {
   stylix.enable = true;
   stylix.targets.gtk.enable = true;
-  stylix.targets.nixvim.enable = true;
-  stylix.targets.nixvim.transparentBackground.main = true;
   stylix.fonts = {
 	monospace = {
 		package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
@@ -16,8 +14,8 @@
   stylix.cursor.name = "capitaine-cursors";
   stylix.cursor.size = 28;
   stylix.fonts.sizes = {
-  	applications = 10;
-	  terminal = 12;
+  	applications = 11;
+	  terminal = 11;
   };
 
   stylix.opacity.terminal = 1.0;

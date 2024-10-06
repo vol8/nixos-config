@@ -2,8 +2,7 @@
 
 {
 	imports = [ 
-		inputs.nixvim.homeManagerModules.nixvim
-    ./modules/default.nix
+    		./modules/default.nix
 	];
 	home.username = "vol";
 	home.homeDirectory = "/home/vol";
@@ -33,7 +32,7 @@
     source = ./dotfiles/i3;
   	onChange = ''${pkgs.i3}/bin/i3-msg reload'';
   };
-
+	
   programs.alacritty = {
     enable = true;
     settings.window.padding = {
@@ -41,8 +40,6 @@
       y = 8; 
     };
   };
-
-	programs.neovim.enable = false;
 
 	programs.firefox.enable = true;
 	programs.rofi.enable = true;

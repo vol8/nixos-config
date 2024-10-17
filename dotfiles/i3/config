@@ -106,6 +106,7 @@ bindsym $mod+Shift+e exec i3-nagbar -t warning -m 'Do you want to exit i3?' -b '
 
 # Programs
 bindsym $mod+p 	    exec /run/current-system/sw/bin/rofi -show drun
+bindsym $mod+o 	    exec /run/current-system/sw/bin/rofi -show run
 bindsym $mod+w      exec firefox-devedition
 bindsym $mod+Return exec alacritty
 bindsym Print exec flameshot gui 

@@ -55,6 +55,11 @@
   # Display Manager and Desktop Manager  
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+  programs.xfconf.enable = true;
 
   # i3
   services.xserver.windowManager.i3 = {
@@ -86,39 +91,61 @@
     wireplumber.enable = true;
   };
 
+xdg.portal.enable = true;
+xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+
 # System Packages
 environment.systemPackages = with pkgs; [
      pkgs.home-manager
      pkgs.nerdfonts
      pkgs.lxappearance
+     pkgs.waybar
+     pkgs.wofi
+     pkgs.networkmanagerapplet
+     pkgs.mako
+     pkgs.swww
+     pkgs.catppuccin-papirus-folders
 
      # GUI
-     pkgs.nautilus
+     pkgs.xfce.thunar
+     pkgs.gvfs
      pkgs.firefox-devedition
      pkgs.vesktop
      pkgs.aseprite
      pkgs.pavucontrol
      pkgs.naps2
      pkgs.mgba
+     pkgs.desmume
      pkgs.ghidra
      pkgs.obsidian
      pkgs.obs-studio
      pkgs.vlc
      pkgs.pinta
      pkgs.kdePackages.kdenlive
+     pkgs.kdePackages.ark
      pkgs.thunderbird
      pkgs.blender
-     pkgs.flameshot
+     pkgs.hyprshot
+     pkgs.libreoffice-qt6-still
+     pkgs.vscode
+     pkgs.virtualbox
+     pkgs.gimp
+     pkgs.github-desktop
 
      # C - Dev
      pkgs.gcc
      pkgs.gnumake
+     pkgs.qt5.full
+     pkgs.qtcreator
 
      # Rust - Dev
      rust-analyzer
      rustc
      cargo
      rustfmt
+
+     # Python
+     pkgs.python3
 
      # CLI
      pkgs.neofetch
@@ -135,6 +162,8 @@ environment.systemPackages = with pkgs; [
      pkgs.cava
      pkgs.cmatrix
      pkgs.pulsemixer
+     pkgs.subversionClient
+     pkgs.bashmount
 
      # NVIM Language Servers
      pkgs.lua-language-server

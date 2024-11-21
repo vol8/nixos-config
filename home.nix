@@ -35,7 +35,10 @@
     };
 
     home.file.".config/neofetch".source = ./dotfiles/neofetch;
-	
+
+    home.file.".config/hypr".source = ./dotfiles/hypr;
+    home.file.".config/waybar".source = ./dotfiles/waybar;
+
     programs.alacritty = {
         enable = true;
         settings.window.padding = {
@@ -45,7 +48,6 @@
     };
 
     programs.firefox.enable = true;
-	programs.rofi.enable = true;
     programs.obs-studio.enable = true;
 
 	home.sessionVariables = {};

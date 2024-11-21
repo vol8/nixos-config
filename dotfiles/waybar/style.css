@@ -1,0 +1,77 @@
+* {
+    border:        none;
+    font-family:   "JetBrainsMono NF", "Font Awesome 6 Free";
+    font-size:     15;
+    margin: 2px;
+    font-feature-settings: '"cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "calt", "zero"';
+}
+
+window {
+    background: rgba(0, 0, 0, 0.00);
+}
+
+.modules-right {
+    margin: 10px 10px 0 0;
+    border-radius: 10px;
+	background-color: rgba(0,0,0,0.6);
+}
+.modules-center {
+	background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    margin: 10px 0 0 0;
+}
+.modules-left {
+    margin: 10px 0 0 10px;
+    border-radius: 10px;
+	background-color: rgba(0,0,0,0.6);
+}
+
+#workspaces button {
+    padding: 1px 5px;
+    padding-right: 10px;
+    background-color: transparent;
+}
+#workspaces button:hover {
+    box-shadow: inherit;
+	background-color: rgba(255,255,255,0.2);
+}
+
+#workspaces button.focused {
+	background-color: rgba(0,43,51,0.85);
+}
+
+#clock,
+#battery,
+#cpu,
+#memory,
+#temperature,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#mode,
+#custom-power,
+#custom-menu,
+#idle_inhibitor {
+    padding: 0 10px;
+}
+
+#battery.warning {
+   color:       rgba(255, 210, 4, 1);
+}
+
+#battery.critical {
+    color:      rgba(238, 46, 36, 1);
+}
+
+#battery.charging {
+    color:      rgba(217, 216, 216, 1);
+}
+
+#custom-storage.warning {
+    color:      rgba(255, 210, 4, 1);
+}
+
+#custom-storage.critical {
+    color:      rgba(238, 46, 36, 1);
+}

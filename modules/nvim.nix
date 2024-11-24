@@ -11,6 +11,7 @@
         cmp-buffer
         cmp-path
         cmp-cmdline
+        transparent-nvim
             
         {
             plugin = nvim-lspconfig;
@@ -27,6 +28,12 @@
     extraLuaConfig = ''
         dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/settings.lua'))
         dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/lsp.lua'))
+
+        require("transparent").setup({
+            extra_groups = {
+                "all",
+            },
+        })
     '';
   };
 }

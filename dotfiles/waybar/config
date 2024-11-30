@@ -2,18 +2,32 @@
     "layer": "bottom",
     "position": "top",
     "height": 36,
-
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["clock"],
     "modules-right": ["custom/mail", "custom/storage", "pulseaudio", "network", "idle_inhibitor", "battery", "tray"],
     "hyprland/workspaces": {
       "format": "{name}",
-      "format": "{icon}",
       "tooltip": false,
       "all-outputs": true,
       "format-icons": {
-        "active": "",
-        "default": ""
+         "1": [],
+         "2": [],
+         "3": [],
+         "4": [],
+         "5": [],
+         "6": [],
+         "7": [],
+         "8": []
+      },
+      "persistent_workspaces": {
+         "1": [],
+         "2": [],
+         "3": [],
+         "4": [],
+         "5": [],
+         "6": [],
+         "7": [],
+         "8": [] 
       }
     },
     "clock": {

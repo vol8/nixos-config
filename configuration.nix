@@ -130,21 +130,8 @@ environment.systemPackages = with pkgs; [
      pkgs.virtualbox
      pkgs.gimp
      pkgs.github-desktop
-
-     # C - Dev
-     pkgs.gcc
-     pkgs.gnumake
-     pkgs.qt5.full
-     pkgs.qtcreator
-
-     # Rust - Dev
-     rust-analyzer
-     rustc
-     cargo
-     rustfmt
-
-     # Python
-     pkgs.python3
+     pkgs.cutter
+     pkgs.qalculate-gtk
 
      # CLI
      pkgs.neofetch
@@ -164,10 +151,28 @@ environment.systemPackages = with pkgs; [
      pkgs.subversionClient
      pkgs.bashmount
 
+     # C - Dev
+     pkgs.gcc
+     pkgs.gnumake
+     pkgs.qt5.full
+     pkgs.qtcreator
+
+     # Rust - Dev
+     rust-analyzer
+     rustc
+     cargo
+     rustfmt
+
+     # Python
+     pkgs.python3
+
      # NVIM Language Servers
      pkgs.lua-language-server
      pkgs.rust-analyzer
      pkgs.clang-tools
+
+     # NVIM Related things
+     pkgs.wl-clipboard
 
      # Wine
      pkgs.wine
@@ -181,7 +186,7 @@ environment.systemPackages = with pkgs; [
      pkgsCross.arm-embedded.stdenv.cc
      pkgs.gcc-arm-embedded
   ];
-
+        
   programs.zsh.enable = true;
   users.defaultUserShell = pkgs.zsh;
 

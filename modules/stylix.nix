@@ -1,10 +1,7 @@
 { pkgs, ... }:
 {
   stylix.enable = true;
-  stylix.targets = {
-      gtk.enable = true;
-      neovim.enable = false;
-  };
+  stylix.targets.gtk.enable = true;
   stylix.fonts = {
 	monospace = {
 		package = pkgs.nerdfonts.override {fonts = ["JetBrainsMono"];};
@@ -24,4 +21,8 @@
 
   stylix.opacity.terminal = 1.0;
   stylix.opacity.applications = 1.0;
+
+  home-manager.sharedModules = [{
+    stylix.targets.neovim.enable = false;
+  }];
 }

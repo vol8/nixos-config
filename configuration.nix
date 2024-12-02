@@ -150,6 +150,9 @@ environment.systemPackages = with pkgs; [
      pkgs.pulsemixer
      pkgs.subversionClient
      pkgs.bashmount
+     pkgs.btop
+     pkgs.htop
+     pkgs.tmux
 
      # C - Dev
      pkgs.gcc
@@ -160,6 +163,7 @@ environment.systemPackages = with pkgs; [
      # Rust - Dev
      rust-analyzer
      rustc
+     rustup
      cargo
      rustfmt
 

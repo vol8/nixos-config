@@ -28,12 +28,14 @@
         -- dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/nvim-cmp.lua'))
         dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/options.lua'))
         dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/keymaps.lua'))
+        dofile(vim.fn.expand('$HOME/nixos-config/dotfiles/nvim/nvim-tree.lua'))
         
         require("transparent").setup({
             extra_groups = {
                 "all",
             },
         })
+
 
         require('base16-colorscheme').setup({
             base00 = '#1d1f21', base01 = '#282a2e', base02 = '#373b41', base03 = '#373b41',

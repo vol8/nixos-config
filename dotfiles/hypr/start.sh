@@ -2,7 +2,7 @@
 
 swww-daemon & 
 
-swww img ~/nixos-config/wallpapers/tomorrow-japan.jpg &
+swww img ~/nixos-config/wallpapers/nix-tomorrow-dark.png &
 
 nm-applet --indicator &
 

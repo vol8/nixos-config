@@ -1,14 +1,21 @@
 * {
     border:        none;
     font-family:   "JetBrainsMono NF", "Font Awesome 6 Free";
-    font-size:     15;
-    font-feature-settings: '"cv01", "cv02", "cv03", "cv04", "cv05", "cv06", "calt", "zero"';
+    font-size:     14;
 }
 
 window {
-    background: rgb(29, 31, 33);
+    background: rgba(0,0,0,0.6);
 }
 
+#workspaces button {
+    color: rgb(55, 59, 65);
+    padding: 4px;
+}
+
+#workspaces button.visible {
+    color: rgb(255, 255, 255);
+}
 
 #clock,
 #battery,

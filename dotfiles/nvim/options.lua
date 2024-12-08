@@ -23,6 +23,9 @@ opt.relativenumber = true
 opt.cursorline = true
 opt.splitright = true -- New windows are split horizontal
 opt.showmode = true -- TODO: Change this to 'false' after adding statusline plugin or what it's called
+vim.wo.signcolumn = "yes"
+opt.fillchars:append { eob = " " }
+opt.shortmess:append({ I = true })
 
 -- Searching
 opt.incsearch = true    -- search as characters are entered

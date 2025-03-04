@@ -8,8 +8,6 @@
     ];
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-    # Allow unfree packages
     nixpkgs.config.allowUnfree = true;
 
     # Bootloader.
@@ -18,11 +16,7 @@
     boot.kernelPackages = pkgs.linuxPackages_latest;
 
     networking.hostName = "nixos"; # Define your hostname.
-    # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-    # Configure network proxy if necessary
-    # networking.proxy.default = "http://user:password@proxy:port/";
-    # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+    networking.nameservers = [ "8.8.8.8" "8.8.4.4" ];
 
     # Enable networking
     networking.networkmanager.enable = true;
@@ -55,29 +49,25 @@
     services.xserver.enable = true;
     services.xserver.displayManager.gdm.enable = true;
     services.xserver.desktopManager.gnome.enable = true;
-    programs.hyprland = {
-        enable = true;
-        xwayland.enable = true;
-    };
-    programs.xfconf.enable = true;
-
-    # i3
     services.xserver.windowManager.i3 = {
         enable = true;
         extraPackages = with pkgs; [
-            i3lock
-            alacritty
-            i3blocks
+            dmenu #application launcher most people use
+            i3status # gives you the default i3 status bar
+            i3lock #default i3 screen locker
         ];
     };
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
+    programs.xfconf.enable = true;
+
+    programs.zsh.enable = true;
     users.users.vol = {
         isNormalUser = true;
         description = "vol";
         extraGroups = [ "networkmanager" "wheel" "audio"];
         packages = with pkgs; [];
     };
+    users.defaultUserShell = pkgs.zsh;
 
     # Enable sound
     hardware.pulseaudio.enable = false;
@@ -90,15 +80,11 @@
         wireplumber.enable = true;
     };
 
-    xdg.portal.enable = true;
-    #xdg.portal.extraPortals = [ config.common.default = "*"; ];
-
     # System Packages
     environment.systemPackages = with pkgs; [
         pkgs.home-manager
         pkgs.nerdfonts
         pkgs.lxappearance
-        pkgs.waybar
         pkgs.wofi
         pkgs.networkmanagerapplet
         pkgs.mako
@@ -124,7 +110,6 @@
         pkgs.kdePackages.ark
         pkgs.thunderbird
         pkgs.blender
-        pkgs.hyprshot
         pkgs.libreoffice-qt6-still
         pkgs.vscode
         pkgs.virtualbox
@@ -134,7 +119,7 @@
         pkgs.qalculate-gtk
 
         # CLI
-        pkgs.neofetch
+        pkgs.nitch
         pkgs.neovim
         pkgs.git
         pkgs.yt-dlp
@@ -153,6 +138,7 @@
         pkgs.btop
         pkgs.htop
         pkgs.tmux
+        pkgs.typst
 
         # C - Dev
         pkgs.gcc
@@ -191,12 +177,7 @@
         pkgs.gcc-arm-embedded
     ];
 
-    programs.zsh.enable = true;
-    users.defaultUserShell = pkgs.zsh;
 
-    nixpkgs.config.packageOverrides = pkgs: {
-        wine = (pkgs.winePackagesFor "wine64").minimal;
-    };
 
     home-manager = {
         extraSpecialArgs = { inherit inputs; };
@@ -205,25 +186,6 @@
         };
     };
     home-manager.backupFileExtension = "backup";
-
-    # Some programs need SUID wrappers, can be configured further or are
-    # started in user sessions.
-    # programs.mtr.enable = true;
-    # programs.gnupg.agent = {
-    #   enable = true;
-    #   enableSSHSupport = true;
-    # };
-
-    # List services that you want to enable:
-
-    # Enable the OpenSSH daemon.
-    # services.openssh.enable = true;
-
-    # Open ports in the firewall.
-    # networking.firewall.allowedTCPPorts = [ ... ];
-    # networking.firewall.allowedUDPPorts = [ ... ];
-    # Or disable the firewall altogether.
-    # networking.firewall.enable = false;
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions

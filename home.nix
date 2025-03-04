@@ -28,16 +28,9 @@
 	home.packages = [
     	(pkgs.nerdfonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
 	];
-  
-	home.file.".i3" = {
-        source = ./dotfiles/i3;
-  	    onChange = ''${pkgs.i3}/bin/i3-msg reload'';
-    };
 
-    home.file.".config/neofetch".source = ./dotfiles/neofetch;
-
-    home.file.".config/hypr".source = ./dotfiles/hypr;
-    home.file.".config/waybar".source = ./dotfiles/waybar;
+    # i3
+    home.file.".config/i3".source = ./dotfiles/i3;
 
     programs.alacritty = {
         enable = true;

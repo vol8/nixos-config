@@ -18,14 +18,14 @@
 			  deviation = 5.0;
 			};
 
-      corner-radius = 15;
-      detect-client-opacity = true;
-      rounded-corners-exclude = [
-        "window_type = 'dock'"
-        "window_type = 'desktop'"
-        "class_g = 'i3bar'"
-        "class_g = 'i3blocks'"
-      ];
+      #corner-radius = 15;
+      #detect-client-opacity = true;
+      #rounded-corners-exclude = [
+      #  "window_type = 'dock'"
+      #  "window_type = 'desktop'"
+      #  "class_g = 'i3bar'"
+      #  "class_g = 'i3blocks'"
+      #];
 
 			opacity-rule = [
 				"85:class_g = 'alacritty'"
